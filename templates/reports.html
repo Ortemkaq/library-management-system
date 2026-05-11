@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-4"><i class="fas fa-chart-bar me-2"></i>Отчеты</h2>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-users me-2"></i>Активные читатели</h5>
+            </div>
+            <div class="card-body">
+                <p>Список читателей с активным статусом</p>
+                <a href="/reports/active_readers" class="btn btn-primary">Сформировать</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="fas fa-clock me-2"></i>Текущие выдачи</h5>
+            </div>
+            <div class="card-body">
+                <p>Список книг, находящихся у читателей</p>
+                <a href="/reports/current_loans" class="btn btn-info">Сформировать</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header bg-warning">
+                <h5 class="mb-0"><i class="fas fa-trophy me-2"></i>Топ читателей</h5>
+            </div>
+            <div class="card-body">
+                <p>Читатели, взявшие больше всего книг</p>
+                <form method="get" action="/reports/top_readers" class="row g-2">
+                    <div class="col-auto">
+                        <label class="form-label">Минимум книг:</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="min_loans" class="form-control" value="2" min="1" style="width: 80px;">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-warning">Сформировать</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="fas fa-star me-2"></i>Популярные книги</h5>
+            </div>
+            <div class="card-body">
+                <p>Книги, которые чаще всего берут читатели</p>
+                <a href="/reports/popular_books" class="btn btn-success">Сформировать</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

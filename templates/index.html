@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-4"><i class="fas fa-tachometer-alt me-2"></i>Панель управления</h2>
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-primary stats-card">
+            <div class="card-body">
+                <h6 class="card-title">Всего книг</h6>
+                <h2 class="mb-0">{{ total_books }}</h2>
+                <small>в каталоге</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-success stats-card">
+            <div class="card-body">
+                <h6 class="card-title">Доступно книг</h6>
+                <h2 class="mb-0">{{ available_books }}</h2>
+                <small>можно взять</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-info stats-card">
+            <div class="card-body">
+                <h6 class="card-title">Читателей</h6>
+                <h2 class="mb-0">{{ total_readers }}</h2>
+                <small>зарегистрировано</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-warning stats-card">
+            <div class="card-body">
+                <h6 class="card-title">Активных выдач</h6>
+                <h2 class="mb-0">{{ active_loans }}</h2>
+                <small>книг на руках</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header bg-dark text-white">
+        <h5 class="mb-0"><i class="fas fa-clock me-2"></i>Последние выдачи</h5>
+    </div>
+    <div class="card-body">
+        {% if recent_loans %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Читатель</th>
+                        <th>Книга</th>
+                        <th>Дата выдачи</th>
+                        <th>Срок возврата</th>
+                        <th>Статус</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for loan in recent_loans %}
+                    <tr>
+                        <td>{{ loan.reader }}</td>
+                        <td>{{ loan.book }}</td>
+                        <td>{{ loan.issue_date }}</td>
+                        <td>{{ loan.due_date }}</td>
+                        <td>
+                            {% if loan.due_date < today and not loan.return_date %}
+                            <span class="badge bg-danger">Просрочена</span>
+                            {% else %}
+                            <span class="badge bg-success">В сроке</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-muted text-center">Нет данных о выдачах</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

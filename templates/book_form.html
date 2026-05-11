@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"><i class="fas fa-edit me-2"></i>{{ title }}</h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            <div class="mb-3">
+                <label>Название <span class="text-danger">*</span></label>
+                <input type="text" name="title" class="form-control" value="{{ book.title if book else '' }}" required>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Автор</label>
+                    <select name="author_id" class="form-select">
+                        <option value="">-- выберите --</option>
+                        {% for a in authors %}
+                        <option value="{{ a.id }}" {% if book and book.author_id == a.id %}selected{% endif %}>
+                            {{ a.full_name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label>Жанр</label>
+                    <select name="genre_id" class="form-select">
+                        <option value="">-- выберите --</option>
+                        {% for g in genres %}
+                        <option value="{{ g.id }}" {% if book and book.genre_id == g.id %}selected{% endif %}>
+                            {{ g.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label>Год издания</label>
+                    <input type="number" name="year" class="form-control" value="{{ book.year if book else '' }}">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label>Количество страниц</label>
+                    <input type="number" name="pages" class="form-control" value="{{ book.pages if book else '' }}">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label>Всего экземпляров</label>
+                    <input type="number" name="total_copies" class="form-control" value="{{ book.total_copies if book else 1 }}" min="1">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a href="/books" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
